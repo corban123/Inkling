@@ -105,5 +105,13 @@ namespace GameProject
                 rigidBody.AddForce(new Vector2(0f, jumpSpeed), ForceMode2D.Impulse);
             }
         }
+
+        private void OnCollisionEnter2D(Collision2D collider)
+        {
+            if(collider.gameObject.tag == "moveableObject")
+            {
+
+            }
+        }
     }
 }   
