@@ -89,7 +89,7 @@ namespace GameProject
                 Debug.Log("JUMPED " + jumpSpeed);
                 isGrounded = false;
                 Anim.SetBool("Grounded", false);
-                rigidBody.AddForce(new Vector2(0f, jumpSpeed));
+                rigidBody.velocity = (new Vector2(0f, jumpSpeed));
             }
         }
         private void Flip()
