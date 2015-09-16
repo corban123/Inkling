@@ -7,24 +7,23 @@ namespace GameProject
         private float maxSpeed = 10;
         private Transform GroundCheck;
         const float GroundedRadius = .1f;
-        private bool isGrounded;
+        public bool isGrounded;
         private Animator Anim;
         private Rigidbody2D rigidBody;
         private bool FacingRight = true;
-        private LayerMask whatIsGround;
-        private float jumpSpeed = 10f;
+        public LayerMask whatIsGround;
+        private float jumpSpeed = 12f;
         public Camera curCamera;
         void Awake()
         {
             Physics.IgnoreLayerCollision(0, 8, true);
 
-            
-            whatIsGround = this.gameObject.layer;
+
+            whatIsGround = 1<<0 | 1 << 2;
             rigidBody = GetComponent<Rigidbody2D>();
             GroundCheck = transform.Find("GroundCheck");
             Anim = GetComponent<Animator>();
-			curCamera.cullingMask = 1;
-            
+			curCamera.cullingMask = 1 | 1<<2;
         }
         // Update is called once per frame
         void Update()
@@ -33,10 +32,10 @@ namespace GameProject
         }
         void FixedUpdate()
         {
+           
 
             isGrounded = false;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(GroundCheck.position, GroundedRadius, whatIsGround + 1);
-
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(GroundCheck.position, GroundedRadius,whatIsGround);
             for (int i = 0; i< colliders.Length; i++)
             {
                 if(colliders[i].gameObject != this.gameObject)
@@ -45,6 +44,7 @@ namespace GameProject
                 }
                 Anim.SetBool("Grounded", isGrounded);
             }
+            Anim.SetFloat("vSpeed", rigidBody.velocity.y);
         }
         public void Move(float horiz, bool flip, bool jump)
         {
@@ -55,9 +55,9 @@ namespace GameProject
             {
 
                 this.gameObject.layer = 8;
-                whatIsGround = 8;
+                whatIsGround = 1<<8 | 1 << 2;
 				GroundCheck.gameObject.layer = 8;
-                curCamera.cullingMask = (1 << LayerMask.NameToLayer("OtherRealm"));
+                curCamera.cullingMask = (1 << LayerMask.NameToLayer("OtherRealm") | 1<<2);
 
 
             }
@@ -65,12 +65,11 @@ namespace GameProject
             {
 
                 this.gameObject.layer = 0;
-                whatIsGround = 0;
+                whatIsGround = 1 | 1 << 2;
 				GroundCheck.gameObject.layer = 0;
-                curCamera.cullingMask = 1;
+                curCamera.cullingMask = 1 | 1<<2;
             }
-            if (isGrounded)
-            {
+            
                 Anim.SetFloat("Speed", Mathf.Abs(horiz));
                 rigidBody.velocity = new Vector2(horiz * maxSpeed, rigidBody.velocity.y);
                 if (horiz > 0 && !FacingRight)
@@ -81,15 +80,14 @@ namespace GameProject
                 {
                     Flip();
                 }
-            }
+            
 
-            if (jump)
+            if (jump && isGrounded)
             {
-                Debug.Log(isGrounded);
-                Debug.Log("JUMPED " + jumpSpeed);
+                Debug.Log("HEYA");
                 isGrounded = false;
+                Anim.SetBool("Jumping", true);
                 Anim.SetBool("Grounded", false);
-                rigidBody.velocity = (new Vector2(0f, jumpSpeed));
             }
         }
         private void Flip()
@@ -98,6 +96,14 @@ namespace GameProject
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+        private void Jump()
+        {
+            if (Anim.GetBool("Jumping"))
+            {
+                Anim.SetBool("Jumping", false);
+                rigidBody.AddForce(new Vector2(0f, jumpSpeed), ForceMode2D.Impulse);
+            }
         }
     }
 }   
