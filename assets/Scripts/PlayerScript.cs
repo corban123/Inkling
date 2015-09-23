@@ -4,7 +4,7 @@ namespace GameProject
 {
     public class PlayerScript : MonoBehaviour
     {
-        private float maxSpeed = 10;
+        private float maxSpeed = 5;
         private Transform GroundCheck;
         const float GroundedRadius = .1f;
         public bool isGrounded;
@@ -49,7 +49,6 @@ namespace GameProject
         public void Move(float horiz, bool flip, bool jump)
         {
 
-            Debug.Log(LayerMask.NameToLayer("Default"));
 
             if (flip && this.gameObject.layer ==0)
             {
@@ -84,7 +83,6 @@ namespace GameProject
 
             if (jump && isGrounded)
             {
-                Debug.Log("HEYA");
                 isGrounded = false;
                 Anim.SetBool("Jumping", true);
                 Anim.SetBool("Grounded", false);
