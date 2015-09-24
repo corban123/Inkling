@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a744365cd513cfc4f90643f993db797a
-timeCreated: 1443045671
+timeCreated: 1443053620
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -48,10 +48,10 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
-  maxTextureSize: 2048
+  textureFormat: -3
+  maxTextureSize: 8192
   textureSettings:
-    filterMode: -1
+    filterMode: 0
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -100,7 +100,7 @@ TextureImporter:
         width: 33
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: untitled-1_1024_3
       rect:
@@ -110,7 +110,7 @@ TextureImporter:
         width: 43
         height: 59
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: untitled-1_1024_4
       rect:
@@ -120,7 +120,7 @@ TextureImporter:
         width: 36
         height: 108
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: untitled-1_1024_5
       rect:
